@@ -3,7 +3,21 @@ orbs:
   node: circleci/node@4.7.0
 
 jobs:
-  build_and_test:
+  build:
+    docker:
+      - image: cimg/node:17.2.0
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          command: npm run build
+          name: Build app
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+  test:
     docker:
       - image: cimg/node:17.2.0
     steps:
@@ -12,10 +26,7 @@ jobs:
           pkg-manager: npm
       - run:
           command: npm run test
-          name: Run tests
-      - run:
-          command: npm run build
-          name: Build app
+          name: Test app
       - persist_to_workspace:
           root: ~/project
           paths:
@@ -23,4 +34,5 @@ jobs:
 workflows:
   on_commit:
     jobs:
-      - build_and_test
+      - build
+      - test
