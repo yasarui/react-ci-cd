@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@4.7.0
 
 jobs:
-  build
+  build:
     docker:
       - image: cimg/node:17.2.0
     steps:
@@ -17,7 +17,7 @@ jobs:
           root: ~/project
           paths:
             - .
-  test
+  test:
     docker:
       - image: cimg/node:17.2.0
     steps:
@@ -35,3 +35,4 @@ workflows:
   on_commit:
     jobs:
       - build
+      - test
