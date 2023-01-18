@@ -31,20 +31,6 @@ jobs:
           root: ~/project
           paths:
             - .
-  build:
-    docker:
-      - image: cimg/node:17.2.0
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: npm
-      - run:
-          command: npm run build
-          name: Build app
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - .
   eslint:
     docker:
       - image: cimg/node:17.2.0
